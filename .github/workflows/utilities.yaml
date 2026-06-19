@@ -38,7 +38,7 @@ jobs:
           done
 
       - name: Commit detected version updates
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           default_author: github_actor
           message: "O1bot: commiting version updates"
