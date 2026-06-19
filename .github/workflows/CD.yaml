@@ -17,10 +17,13 @@ jobs:
         with:
           dir_names: "true"
           dir_names_max_depth: "1"
-          dir_names_exclude_root: "true"
+          dir_names_exclude_current_dir: "true"
           files_ignore: |
-            .github
-            docs
+            .github/**
+            docs/**
+            *.md
+            *.txt
+            *.json
 
       - name: Install workflow dependencies
         run: |
@@ -30,6 +33,7 @@ jobs:
       - name: Build modified application Docker images
         run: |
           for dir in ${{ steps.changed-dirs.outputs.all_changed_files }}; do
+            [ -f "$dir/meta.yml" ] || continue
             version=$(cat $dir/meta.yml | yq -r .version)
             docker build $dir/ --file $dir/Dockerfile --build-arg VERSION=$version --tag 0labs/$dir:$version
           done
@@ -43,6 +47,7 @@ jobs:
       - name: Publish Docker image
         run: |
           for dir in ${{ steps.changed-dirs.outputs.all_changed_files }}; do
+            [ -f "$dir/meta.yml" ] || continue
             version=$(cat $dir/meta.yml | yq -r .version)
             docker push 0labs/$dir:$version
           done
@@ -53,6 +58,7 @@ jobs:
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PWD }}
         run: |
           for dir in ${{ steps.changed-dirs.outputs.all_changed_files }}; do
+            [ -f "$dir/meta.yml" ] || continue
             export name=$dir
             version=$(cat $dir/meta.yml | yq -r .version)
             export version_info=$( { docker run --rm -e RUN_ARGS=--version 0labs/$dir:$version; } 2>&1)
