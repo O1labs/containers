@@ -22,6 +22,9 @@ jobs:
           files_ignore: |
             .github/**
             docs/**
+            *.md
+            *.txt
+            *.json
 
       - name: Install workflow dependencies
         run: |
@@ -31,6 +34,7 @@ jobs:
       - name: Build modified application Docker images
         run: |
           for dir in ${{ steps.changed-dirs.outputs.all_changed_files }}; do
+            [ -f "$dir/meta.yml" ] || continue
             version=$(cat $dir/meta.yml | yq -r .version)
             docker build $dir/ --file $dir/Dockerfile --build-arg VERSION=$version --tag 0labs/$dir:$version
           done
@@ -38,6 +42,7 @@ jobs:
       - name: Test application docker-compose setups
         run: |
           for dir in ${{ steps.changed-dirs.outputs.all_changed_files }}; do
+            [ -f "$dir/docker-compose.yaml" ] || continue
             docker-compose -f $dir/docker-compose.yaml up -d --build
             docker-compose -f $dir/docker-compose.yaml down
           done
