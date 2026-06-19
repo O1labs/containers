@@ -20,8 +20,8 @@ jobs:
           dir_names_max_depth: "1"
           dir_names_exclude_root: "true"
           files_ignore: |
-            .github
-            docs
+            .github/**
+            docs/**
 
       - name: Install workflow dependencies
         run: |
