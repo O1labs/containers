@@ -14,14 +14,14 @@ jobs:
 
       - name: Identify changed application subdirectories
         id: changed-dirs
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v47
         with:
           dir_names: "true"
           dir_names_max_depth: "1"
           dir_names_exclude_root: "true"
           files_ignore: |
-            .github
-            docs
+            .github/**
+            docs/**
 
       - name: Install workflow dependencies
         run: |
