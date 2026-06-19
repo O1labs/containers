@@ -18,7 +18,7 @@ jobs:
         with:
           dir_names: "true"
           dir_names_max_depth: "1"
-          dir_names_exclude_root: "true"
+          dir_names_exclude_current_dir: "true"
           files_ignore: |
             .github/**
             docs/**
