@@ -1,4 +1,4 @@
-version: 1.10.5
+version: 1.14.2
 latest_release_url: https://api.github.com/repos/ava-labs/avalanchego/releases/latest
 cli_help: --help
 example_config: 'https://raw.githubusercontent.com/ava-labs/avalanche-docs/master/docs/nodes/maintain/avalanchego-config-flags.md
