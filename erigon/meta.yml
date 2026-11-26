@@ -1,4 +1,4 @@
-version: 2.48.1
+version: 'null'
 latest_release_url: https://api.github.com/repos/ledgerwatch/erigon/releases/latest
 cli_help: --help
 example_config: null
